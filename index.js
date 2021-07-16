@@ -2,9 +2,9 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const hotelRoutes = require("./api/routes/hotelRoute");
-const mainRoutes = require("./api/routes/main");
-const authRoutes = require("./api/routes/authRoute");
+// const hotelRoutes = require("./api/routes/creatorsRoute");
+// const mainRoutes = require("./api/routes/main");
+const authRoutes = require("./auth/routes/authRoute");
 
 dotenv.config();
 // require db
@@ -26,9 +26,9 @@ app.use((req, res, next) => {
 });
 
 // set up routes
-app.use("/hotels", hotelRoutes);
+// app.use("/creators", hotelRoutes);
 app.use("/auth", authRoutes);
-app.use("/main", mainRoutes);
+// app.use("/main", mainRoutes);
 
 //server listening on port
 app.listen(process.env.PORT || 8000, function () {
