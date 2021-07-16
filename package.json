@@ -1,5 +1,5 @@
 {
-  "name": "hotellistebackend",
+  "name": "linkonnekt-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sanskar0520/hotellisteBackend.git"
+    "url": "git+https://github.com/linkonekt/linkonnekt-backend.git"
   },
   "author": "sanskar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Sanskar0520/hotellisteBackend/issues"
+    "url": "https://github.com/linkonekt/linkonnekt-backend/issues"
   },
-  "homepage": "https://github.com/Sanskar0520/hotellisteBackend#readme",
+  "homepage": "https://github.com/linkonekt/linkonnekt-backend#readme",
   "dependencies": {
     "@sendgrid/mail": "^7.4.5",
     "bcrypt": "^5.0.1",
