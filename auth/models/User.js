@@ -16,28 +16,97 @@ const userSchema = new mongoose.Schema({
   isEmailVerified: {
     type: Boolean,
   },
-  // profileInfo: {
-  //   firstname: { type: String },
-  //   lastname: { type: String },
-  //   country: { type: String },
-  //   state: { type: String },
-  //   pincode: { type: Number },
-  //   address: { type: String },
-  // },
-  // categories: {
-  //   category: { type: String },
-  //   platform: { type: String },
-  //   instagram: {
-  //     instaAccUsername: { type: String },
-  //     instaAccLink: { type: String },
-  //     followers: { type: Number },
-  //   },
-  //   youtube: {
-  //     youtubeChannelName: { type: String },
-  //     youtubeChannelLink: { type: String },
-  //     followers: { type: Number },
-  //   },
-  // },
+  profileInfo: {
+    personalInfo: {
+      firstName: {
+        type: String,
+      },
+      lastName: {
+        type: String,
+      },
+      country: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      address: {
+        type: String,
+      },
+      pincode: {
+        type: String,
+      },
+    },
+    categories: {
+      Category: {
+        type: String,
+      },
+      Platforms: {
+        P1: {
+          Platform: {
+            type: String,
+          },
+          Followers: {
+            type: String,
+          },
+          Subscribers: {
+            type: String,
+          },
+        },
+        P2: {
+          Platform: {
+            type: String,
+          },
+          Followers: {
+            type: String,
+          },
+          Subscribers: {
+            type: String,
+          },
+        },
+        P3: {
+          Platform: {
+            type: String,
+          },
+          Followers: {
+            type: String,
+          },
+          Subscribers: {
+            type: String,
+          },
+        },
+        P4: {
+          Platform: {
+            type: String,
+          },
+          Followers: {
+            type: String,
+          },
+          Subscribers: {
+            type: String,
+          },
+        },
+      },
+    },
+  },
+  socialLinks: {
+    Instagram: {
+      type: String,
+    },
+    Facebook: {
+      type: String,
+    },
+    LinkedIn: {
+      type: String,
+    },
+    Twitter: {
+      type: String,
+    },
+    YouTube: {
+      type: String,
+    },
+  },
+
   role: {
     type: String,
   },

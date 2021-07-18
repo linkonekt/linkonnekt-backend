@@ -9,6 +9,9 @@ router.post("/login", controller.postLoginData);
 //auth with react-login
 router.post("/oauthlogin", controller.postOuthLogin);
 
+//signup with react-login
+router.post("/oauthsignup", controller.postOuthSignup);
+
 //sendmail
 router.post("/sendmail", verify, controller.postSendmail);
 
@@ -19,5 +22,7 @@ router.get("/isAuth", verify, (req, res) => {
 });
 
 router.get("/isEmailVerified", verify, controller.isEmailVerified);
+
+router.patch("/profileinfo", verify, controller.profileinfo);
 
 module.exports = router;

@@ -29,6 +29,7 @@ exports.postSignupData = async (req, res) => {
             username: req.body.username,
             email: req.body.email,
             password: hash,
+            role: req.body.role,
             isEmailVerified: false,
           });
           try {
@@ -94,6 +95,26 @@ exports.postOuthLogin = async (req, res, next) => {
 
     // check if user already exists in our own db
     await User.findOne({ email: email }).then((currentUser) => {
+      if (currentUser) {
+        const token = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
+          expiresIn: "1hr",
+        });
+        res.json({ ok: 1, token: token, user: currentUser });
+      } else {
+        res.send("User not found");
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+exports.postOuthSignup = async (req, res, next) => {
+  try {
+    // the oauthpipeline verifies the user and returns the email
+    const { given_name, email, sub } = await oauthpipeline(req, next);
+
+    // check if user already exists in our own db
+    await User.findOne({ email: email }).then((currentUser) => {
       if (!currentUser) {
         // already have this user
         new User({
@@ -102,12 +123,14 @@ exports.postOuthLogin = async (req, res, next) => {
           isEmailVerified: false,
           role: req.body.role,
         }).save();
+        // const { email } = await oauthpipeline(req, next);
+        const token = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
+          expiresIn: "1hr",
+        });
+        res.json({ ok: 1, token: token, user: currentUser });
+      } else {
+        res.send("User already exists");
       }
-      // const { email } = await oauthpipeline(req, next);
-      const token = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
-        expiresIn: "1hr",
-      });
-      res.json({ ok: 1, token: token, user: currentUser });
     });
   } catch (err) {
     console.log(err);
@@ -120,7 +143,6 @@ exports.postSendmail = async (req, res) => {
     const code = Math.floor(Math.random() * 9000) + 1000;
     // the oauthpipeline verifies the user and returns the email
     const email = req.userEmail;
-    console.log(email);
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
       to: email,
@@ -179,6 +201,31 @@ exports.isEmailVerified = async (req, res) => {
       }
       if (!currentUser) {
         res.send("User not found");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.profileinfo = async (req, res) => {
+  await User.findOne({ email: req.userEmail })
+    .then(async (currentUser) => {
+      try {
+        const filter = { email: req.userEmail };
+        const update1 = { profileInfo: req.body.profileObj };
+        const update2 = { socialLinks: req.body.socialUrls };
+
+        await User.findOneAndUpdate(filter, update1, {
+          new: true,
+        });
+        await User.findOneAndUpdate(filter, update2, {
+          new: true,
+        });
+
+        res.json({ ok: 1 });
+      } catch (error) {
+        res.json({ error: error });
       }
     })
     .catch((err) => {
