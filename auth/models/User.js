@@ -106,6 +106,9 @@ const userSchema = new mongoose.Schema({
       type: String,
     },
   },
+  profileImg: {
+    type: String,
+  },
 
   role: {
     type: String,

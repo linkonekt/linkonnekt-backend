@@ -25,4 +25,6 @@ router.get("/isEmailVerified", verify, controller.isEmailVerified);
 
 router.patch("/profileinfo", verify, controller.profileinfo);
 
+router.post("/uploadDP", verify, controller.uploadDP);
+
 module.exports = router;

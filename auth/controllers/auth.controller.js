@@ -4,6 +4,8 @@ const { signupValidation, loginValidation } = require("../validation");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const oauthpipeline = require("../../config/OauthSetup");
+const multer = require("multer");
+const path = require("path");
 const nodemailer = require("nodemailer");
 const sgMail = require("@sendgrid/mail");
 const verify = require("../verifyToken");
@@ -11,6 +13,42 @@ const verify = require("../verifyToken");
 dotenv.config();
 
 const saltRounds = 10;
+//set storage engine
+const storage = multer.diskStorage({
+  destination: "./public/uploads/",
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+//upload
+const upload = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    // //allowed ext
+    // const filetypes = /jpeg|jpg|png/;
+    // //check ext
+    // const extname = filetypes.test(
+    //   path.extname(file.originalname).toLowerCase()
+    // );
+    // //check mimetype
+    // const mimetype = filetypes.test(file.mimetype);
+    if (
+      file.mimetype === "image/jpeg" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/png"
+    ) {
+      return cb(null, true);
+    } else {
+      return cb(new Error("Images Only!"), false);
+    }
+  },
+}).single("DisplayPicture");
+
+//controllers
 
 exports.postSignupData = async (req, res) => {
   // validate the data. The joi.validate thing send error as the 1st object in its response and there is also a message in the details.
@@ -31,6 +69,7 @@ exports.postSignupData = async (req, res) => {
             password: hash,
             role: req.body.role,
             isEmailVerified: false,
+            profileImg: "http://localhost:8000/public/uploads/Default.jpg",
           });
           try {
             const savedUser = await user.save();
@@ -122,6 +161,7 @@ exports.postOuthSignup = async (req, res, next) => {
           email: email,
           isEmailVerified: false,
           role: req.body.role,
+          profileImg: req.body.profileImg,
         }).save();
         // const { email } = await oauthpipeline(req, next);
         const token = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
@@ -232,3 +272,39 @@ exports.profileinfo = async (req, res) => {
       console.log(err);
     });
 };
+
+exports.uploadDP = async (req, res) => {
+  const filter = { email: req.userEmail };
+
+  upload(req, res, async (err) => {
+    if (err) {
+      res.send(err);
+      console.log(err);
+    } else {
+      try {
+        const update = { profileImg: req.file.path };
+        await User.findOneAndUpdate(filter, update, {
+          new: true,
+        });
+
+        res.json({ ok: 1, path: req.file.path });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  });
+};
+
+// function fileFilter(file, cb) {
+//   //allowed ext
+//   const filetypes = /jpeg|jpg|png/;
+//   //check ext
+//   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+//   //check mimetype
+//   const mimetype = filetypes.test(file.mimetype);
+//   if (mimetype && extname) {
+//     return cb(null, true);
+//   } else {
+//     return cb(new Error("Images Only!"));
+//   }
+// }

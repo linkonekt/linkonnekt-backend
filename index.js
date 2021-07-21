@@ -2,15 +2,17 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-// const hotelRoutes = require("./api/routes/creatorsRoute");
-// const mainRoutes = require("./api/routes/main");
 const authRoutes = require("./auth/routes/authRoute");
+const multer = require("multer");
+const path = require("path");
 
 dotenv.config();
+
 // require db
 require("./config/mongoose.js");
 
 const app = express();
+app.use("/public", express.static("public"));
 
 app.use(bodyParser.json());
 //handled CORS
