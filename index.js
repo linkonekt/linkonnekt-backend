@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const authRoutes = require("./auth/routes/authRoute");
+const creatorRoutes = require("./api/routes/creatorRoute");
 const multer = require("multer");
 const path = require("path");
 
@@ -30,7 +31,7 @@ app.use((req, res, next) => {
 // set up routes
 // app.use("/creators", hotelRoutes);
 app.use("/auth", authRoutes);
-// app.use("/main", mainRoutes);
+app.use("/creator", creatorRoutes);
 
 //server listening on port
 app.listen(process.env.PORT || 8000, function () {
