@@ -88,24 +88,25 @@ const userSchema = new mongoose.Schema({
         },
       },
     },
+    socialLinks: {
+      Instagram: {
+        type: String,
+      },
+      Facebook: {
+        type: String,
+      },
+      LinkedIn: {
+        type: String,
+      },
+      Twitter: {
+        type: String,
+      },
+      YouTube: {
+        type: String,
+      },
+    },
   },
-  socialLinks: {
-    Instagram: {
-      type: String,
-    },
-    Facebook: {
-      type: String,
-    },
-    LinkedIn: {
-      type: String,
-    },
-    Twitter: {
-      type: String,
-    },
-    YouTube: {
-      type: String,
-    },
-  },
+
   profileImg: {
     type: String,
   },

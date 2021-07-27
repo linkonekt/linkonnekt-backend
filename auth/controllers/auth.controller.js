@@ -254,12 +254,8 @@ exports.profileinfo = async (req, res) => {
       try {
         const filter = { email: req.userEmail };
         const update1 = { profileInfo: req.body.profileObj };
-        const update2 = { socialLinks: req.body.socialUrls };
 
         await User.findOneAndUpdate(filter, update1, {
-          new: true,
-        });
-        await User.findOneAndUpdate(filter, update2, {
           new: true,
         });
 
