@@ -105,6 +105,9 @@ const userSchema = new mongoose.Schema({
         type: String,
       },
     },
+    popularity: {
+      type: Number,
+    },
   },
 
   profileImg: {
