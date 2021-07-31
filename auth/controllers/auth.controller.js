@@ -291,16 +291,35 @@ exports.uploadDP = async (req, res) => {
   });
 };
 
-// function fileFilter(file, cb) {
-//   //allowed ext
-//   const filetypes = /jpeg|jpg|png/;
-//   //check ext
-//   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-//   //check mimetype
-//   const mimetype = filetypes.test(file.mimetype);
-//   if (mimetype && extname) {
-//     return cb(null, true);
-//   } else {
-//     return cb(new Error("Images Only!"));
-//   }
-// }
+exports.postSendInvitemail = async (req, res) => {
+  let name = "";
+  try {
+    await User.findOne({ email: req.userEmail }).then((user) => {
+      name =
+        user.profileInfo.personalInfo.firstName +
+        " " +
+        user.profileInfo.personalInfo.lastName;
+    });
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+      to: req.body.email.email,
+      from: {
+        email: "linkonnekt1@gmail.com",
+        name: name,
+      },
+      subject: req.body.email.subject,
+      html: "<p style='font-size: large;'>" + req.body.email.content + "</p>",
+    };
+    sgMail
+      .send(msg)
+      .then((response) => {
+        console.log("Email sent");
+        res.json({ ok: 1 });
+      })
+      .catch((err) => {
+        res.json({ ok: 0, error: err });
+      });
+  } catch (err) {
+    console.log(err);
+  }
+};

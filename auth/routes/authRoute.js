@@ -15,6 +15,9 @@ router.post("/oauthsignup", controller.postOuthSignup);
 //sendmail
 router.post("/sendmail", verify, controller.postSendmail);
 
+//send invite mail
+router.post("/sendinvitemail", verify, controller.postSendInvitemail);
+
 router.post("/emailVerification", verify, controller.emailVerification);
 
 router.get("/isAuth", verify, (req, res) => {
