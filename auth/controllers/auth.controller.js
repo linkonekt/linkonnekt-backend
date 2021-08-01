@@ -235,9 +235,9 @@ exports.isEmailVerified = async (req, res) => {
   await User.findOne({ email: req.userEmail })
     .then((currentUser) => {
       if (currentUser.isEmailVerified) {
-        res.json({ ok: 1 });
+        res.json({ ok: 1, user: currentUser });
       } else {
-        res.json({ ok: 0 });
+        res.json({ ok: 0, user: currentUser });
       }
       if (!currentUser) {
         res.send("User not found");
