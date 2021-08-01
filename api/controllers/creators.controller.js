@@ -74,19 +74,18 @@ exports.categoryFilter = async (req, res, next) => {
   }
 };
 
-// exports.book = async (req, res) => {
-//   await User.findOne({ email: req.userEmail }, (err, foundUser) => {
-//     try {
-//       if (foundUser) {
-//         const newBook = req.body;
-//         foundUser.bookings.push(newBook);
-//         foundUser.save();
-//         res.json({ ok: 1 });
-//       } else {
-//         res.send("User Not Found");
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   });
-// };
+exports.getProfile = async (req, res, next) => {
+  const username = req.params.username;
+  try {
+    await User.findOne({ username: username }, async (err, user) => {
+      if (user) {
+        res.status(200).json({ ok: 1, user: user });
+      } else {
+        res.status(404).json({ message: err });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+};

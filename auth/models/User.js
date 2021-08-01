@@ -30,10 +30,7 @@ const userSchema = new mongoose.Schema({
       state: {
         type: String,
       },
-      address: {
-        type: String,
-      },
-      pincode: {
+      about: {
         type: String,
       },
     },

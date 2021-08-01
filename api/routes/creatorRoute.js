@@ -9,6 +9,8 @@ router.get("/list", controller.getAllCreators);
 router.get("/list/name/:search", controller.nameSearch);
 //GET creators by category
 router.get("/list/category/:category", controller.categoryFilter);
+//GET creators by username
+router.get("/:username", controller.getProfile);
 // //GET hotels by ratings
 // router.get("/list/rating/:rating", controller.rateFilter);
 

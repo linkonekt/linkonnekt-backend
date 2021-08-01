@@ -69,7 +69,7 @@ exports.postSignupData = async (req, res) => {
             password: hash,
             role: req.body.role,
             isEmailVerified: false,
-            profileImg: "http://localhost:8000/public/uploads/Default.jpg",
+            profileImg: "http://localhost:8000/public/uploads/Default.png",
           });
           try {
             const savedUser = await user.save();
