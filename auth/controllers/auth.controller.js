@@ -186,7 +186,10 @@ exports.postSendmail = async (req, res) => {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
       to: email,
-      from: "linkonnekt1@gmail.com",
+      from: {
+        email: "hello@linkonnekt.com",
+        name: "Linkonnekt",
+      },
       subject: "Verification Code",
       html:
         "<h4>Your email verfication code for Linkonnekt is: </h4><h1 style='font-size: large;'>" +
@@ -278,12 +281,13 @@ exports.uploadDP = async (req, res) => {
       console.log(err);
     } else {
       try {
-        const update = { profileImg: req.file.path };
+        const path = "http://localhost:8000/" + req.file.path;
+        const update = { profileImg: path };
         await User.findOneAndUpdate(filter, update, {
           new: true,
         });
 
-        res.json({ ok: 1, path: req.file.path });
+        res.json({ ok: 1, path: path });
       } catch (error) {
         console.log(error);
       }
@@ -304,7 +308,7 @@ exports.postSendInvitemail = async (req, res) => {
     const msg = {
       to: req.body.email.email,
       from: {
-        email: "linkonnekt1@gmail.com",
+        email: "hello@linkonnekt.com",
         name: name,
       },
       subject: req.body.email.subject,

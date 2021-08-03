@@ -1,4 +1,4 @@
-// const Hotel = require("../models/Hotel");
+const Email = require("../models/Email");
 const User = require("../../auth/models/User");
 
 exports.getAllCreators = async (req, res, next) => {
@@ -85,6 +85,20 @@ exports.getProfile = async (req, res, next) => {
       }
     });
   } catch (error) {
+    console.log(error);
+    next();
+  }
+};
+
+exports.addEmail = async (req, res, next) => {
+  try {
+    const email = new Email({
+      Email: req.body.email,
+    });
+    await email.save();
+    res.json({ ok: 1 });
+  } catch (error) {
+    res.send(error);
     console.log(error);
     next();
   }
