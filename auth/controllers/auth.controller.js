@@ -69,7 +69,7 @@ exports.postSignupData = async (req, res) => {
             password: hash,
             role: req.body.role,
             isEmailVerified: false,
-            profileImg: "http://localhost:8000/public/uploads/Default.png",
+            profileImg: process.env.BACKEND_URL + "public/uploads/Default.png",
           });
           try {
             const savedUser = await user.save();
@@ -281,7 +281,7 @@ exports.uploadDP = async (req, res) => {
       console.log(err);
     } else {
       try {
-        const path = "http://localhost:8000/" + req.file.path;
+        const path = process.env.BACKEND_URL + req.file.path;
         const update = { profileImg: path };
         await User.findOneAndUpdate(filter, update, {
           new: true,
