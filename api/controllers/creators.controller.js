@@ -61,7 +61,10 @@ exports.nameSearch = async (req, res, next) => {
 exports.categoryFilter = async (req, res, next) => {
   const category = req.params.category;
   try {
-    await User.find({ "profileInfo.categories.Category": category })
+    await User.find({
+      "profileInfo.categories.Category": category,
+      email: { $ne: req.userEmail },
+    })
       .then((creators) => {
         res.status(200).json(creators);
       })
