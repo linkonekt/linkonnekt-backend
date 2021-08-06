@@ -106,3 +106,20 @@ exports.addEmail = async (req, res, next) => {
     next();
   }
 };
+//top 5
+exports.top5 = async (req, res, next) => {
+  try {
+    await User.find()
+      .limit(5)
+      .sort({ "profileInfo.popularity": -1 })
+      .then((creators) => {
+        res.status(200).json(creators);
+      })
+      .catch((err) => {
+        res.status(404).json({ message: err });
+      });
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+};

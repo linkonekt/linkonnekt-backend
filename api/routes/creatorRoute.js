@@ -9,10 +9,13 @@ router.get("/list", controller.getAllCreators);
 router.get("/list/name/:search", verify, controller.nameSearch);
 //GET creators by category
 router.get("/list/category/:category", verify, controller.categoryFilter);
+//get top 5 creators
+router.get("/top5", controller.top5);
 //GET creators by username
 router.get("/:username", controller.getProfile);
 //post user email
 router.post("/addemail", controller.addEmail);
+
 // //GET hotels by ratings
 // router.get("/list/rating/:rating", controller.rateFilter);
 
