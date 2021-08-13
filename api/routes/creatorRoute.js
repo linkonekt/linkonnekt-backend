@@ -15,6 +15,10 @@ router.get("/top5", controller.top5);
 router.get("/:username", controller.getProfile);
 //post user email
 router.post("/addemail", controller.addEmail);
+//post invitation
+router.post("/postinvite", controller.postInvite);
+//get all invitations
+router.get("/invitations", controller.postInvite);
 
 // //GET hotels by ratings
 // router.get("/list/rating/:rating", controller.rateFilter);

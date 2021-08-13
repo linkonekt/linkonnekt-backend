@@ -123,3 +123,19 @@ exports.top5 = async (req, res, next) => {
     next();
   }
 };
+
+exports.postInvite = async (req, res, next) => {
+  // const fromUsername = req.body.from;
+  const toUsername = req.body.to;
+  try {
+    const filter = { username: toUsername };
+    const update = { $push: { invitations: req.body } };
+
+    await User.findOneAndUpdate(filter, update);
+
+    res.json({ ok: 1 });
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+};

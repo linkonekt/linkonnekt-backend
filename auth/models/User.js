@@ -110,7 +110,14 @@ const userSchema = new mongoose.Schema({
   profileImg: {
     type: String,
   },
-
+  invitations: [
+    {
+      fromImage: { type: String },
+      from: { type: String },
+      to: { type: String },
+      message: { type: String },
+    },
+  ],
   role: {
     type: String,
   },
