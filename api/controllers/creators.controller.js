@@ -126,9 +126,9 @@ exports.top5 = async (req, res, next) => {
 
 exports.postInvite = async (req, res, next) => {
   // const fromUsername = req.body.from;
-  const toUsername = req.body.to;
+  const toEmail = req.body.to;
   try {
-    const filter = { username: toUsername };
+    const filter = { email: toEmail };
     const update = { $push: { invitations: req.body } };
 
     await User.findOneAndUpdate(filter, update);
