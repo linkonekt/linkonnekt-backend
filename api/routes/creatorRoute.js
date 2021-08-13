@@ -17,8 +17,8 @@ router.get("/:username", controller.getProfile);
 router.post("/addemail", controller.addEmail);
 //post invitation
 router.post("/postinvite", controller.postInvite);
-//get all invitations
-router.get("/invitations", controller.postInvite);
+// //get all invitations
+// router.get("/invitations", controller.invitations);
 
 // //GET hotels by ratings
 // router.get("/list/rating/:rating", controller.rateFilter);
