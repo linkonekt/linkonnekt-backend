@@ -139,3 +139,23 @@ exports.postInvite = async (req, res, next) => {
     next();
   }
 };
+
+exports.invitations = async (req, res, next) => {
+  try {
+    const email = req.userEmail;
+    await User.findOne({ email: email }, async (err, user) => {
+      if (user) {
+        const invites = user.invitations;
+        res.status(200).json({ ok: 1, invitations: invites });
+      } else {
+        res.status(404).json({ message: err });
+      }
+    });
+
+    //   await user.updateOne(newUserObject, { override: true, upsert: true });
+    //   const savedUser = await User.findById(user._id);
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+};

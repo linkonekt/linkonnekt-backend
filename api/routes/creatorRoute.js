@@ -12,13 +12,13 @@ router.get("/list/category/:category", verify, controller.categoryFilter);
 //get top 5 creators
 router.get("/top5", controller.top5);
 //GET creators by username
-router.get("/:username", controller.getProfile);
+router.get("/profile/:username", controller.getProfile);
+//get all invitations
+router.get("/invitations", verify, controller.invitations);
 //post user email
 router.post("/addemail", controller.addEmail);
 //post invitation
 router.post("/postinvite", controller.postInvite);
-// //get all invitations
-// router.get("/invitations", controller.invitations);
 
 // //GET hotels by ratings
 // router.get("/list/rating/:rating", controller.rateFilter);
