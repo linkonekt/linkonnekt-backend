@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const oauthpipeline = require("../../config/OauthSetup");
 const multer = require("multer");
 const path = require("path");
+// const emailTemp = require("email.ejs");
 const nodemailer = require("nodemailer");
 const sgMail = require("@sendgrid/mail");
 const verify = require("../verifyToken");
@@ -185,16 +186,19 @@ exports.postSendmail = async (req, res) => {
     const email = req.userEmail;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
-      to: email,
+      template_id: "d-3382a5c403dc4b2e9d88ed00a578d8be",
       from: {
         email: "hello@linkonnekt.com",
         name: "Linkonnekt",
       },
-      subject: "Verification Code",
-      html:
-        "<h4>Your email verfication code for Linkonnekt is: </h4><h1 style='font-size: large;'>" +
-        code +
-        "</h1>",
+      personalizations: [
+        {
+          to: { email: email },
+          dynamic_template_data: {
+            code: code,
+          },
+        },
+      ],
     };
     bcrypt.hash("" + code, saltRounds, async function (err, hash) {
       sgMail
@@ -204,6 +208,7 @@ exports.postSendmail = async (req, res) => {
           res.json({ ok: 1, code: hash });
         })
         .catch((err) => {
+          console.log(err.response.body);
           res.json({ ok: 0, error: err });
         });
     });
