@@ -159,3 +159,19 @@ exports.invitations = async (req, res, next) => {
     next();
   }
 };
+
+exports.editAbout = async (req, res, next) => {
+  try {
+    const about = req.body.about;
+    const email = req.userEmail;
+    const filter = { email: email };
+    const update = { "profileInfo.personalInfo.about": about };
+
+    await User.findOneAndUpdate(filter, update);
+
+    res.json({ ok: 1 });
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+};

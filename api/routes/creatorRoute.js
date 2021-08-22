@@ -19,6 +19,8 @@ router.get("/invitations", verify, controller.invitations);
 router.post("/addemail", controller.addEmail);
 //post invitation
 router.post("/postinvite", controller.postInvite);
+//post about
+router.patch("/editabout", verify, controller.editAbout);
 
 // //GET hotels by ratings
 // router.get("/list/rating/:rating", controller.rateFilter);
